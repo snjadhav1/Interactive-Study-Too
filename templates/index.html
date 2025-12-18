@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBot AI - Oligopoly Economics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-graduation-cap"></i>
+            <span>StudyBot AI</span>
+        </div>
+        <div class="nav-links">
+            <button class="nav-link active" onclick="showSection('home')">
+                <i class="fas fa-home"></i> <span>Home</span>
+            </button>
+            <button class="nav-link" onclick="showSection('dialogue')">
+                <i class="fas fa-comments"></i> <span>AI Chat</span>
+            </button>
+            <button class="nav-link" onclick="showSection('videos')">
+                <i class="fas fa-video"></i> <span>Videos</span>
+            </button>
+            <button class="nav-link" onclick="showSection('quiz')">
+                <i class="fas fa-question-circle"></i> <span>Quiz</span>
+            </button>
+            <button class="nav-link" onclick="showSection('flashcards')">
+                <i class="fas fa-clone"></i> <span>Flashcards</span>
+            </button>
+        </div>
+        <div class="nav-actions">
+            <button id="theme-toggle" class="theme-btn" onclick="toggleTheme()" title="Toggle Theme">
+                <i class="fas fa-moon"></i>
+            </button>
+            <div class="ai-status" id="ai-status">
+                <span class="status-dot" id="status-dot"></span>
+                <span class="status-text" id="status-text">Checking...</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="hero-icon">📚</div>
+                <h1>Oligopoly Study Tool</h1>
+                <p class="hero-subtitle">AI-Powered Learning for AQA Economics A-Level</p>
+                <p class="hero-description">
+                    Master oligopoly concepts with interactive AI dialogue, video analysis, quizzes, and flashcards.
+                </p>
+                <div class="hero-features">
+                    <div class="feature-badge">
+                        <i class="fas fa-robot"></i>
+                        <span>Real AI Chat</span>
+                    </div>
+                    <div class="feature-badge">
+                        <i class="fas fa-youtube"></i>
+                        <span>Video Q&A</span>
+                    </div>
+                    <div class="feature-badge">
+                        <i class="fas fa-book"></i>
+                        <span>Chapter Content</span>
+                    </div>
+                </div>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" onclick="showSection('dialogue')">
+                        <i class="fas fa-comments"></i> Start AI Chat
+                    </button>
+                    <button class="btn btn-secondary" onclick="showSection('videos')">
+                        <i class="fas fa-video"></i> Watch Videos
+                    </button>
+                </div>
+            </div>
+            
+            <div class="topics-section">
+                <h2><i class="fas fa-list"></i> Chapter Topics</h2>
+                <div class="topics-grid" id="topics-grid"></div>
+            </div>
+        </section>
+
+        <!-- AI Dialogue Section -->
+        <section id="dialogue" class="section">
+            <div class="chat-wrapper">
+                <div class="chat-header">
+                    <h2><i class="fas fa-robot"></i> AI Teacher Chat</h2>
+                    <p>Ask questions about Oligopoly - I'll answer using the textbook and video content!</p>
+                </div>
+                
+                <div class="chat-container" id="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message bot">
+                            <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                            <div class="message-content">
+                                <strong>Welcome!</strong> I'm your AI Economics tutor. I can answer questions about:
+                                <ul>
+                                    <li>📖 The Oligopoly chapter content</li>
+                                    <li>🎬 The YouTube video transcripts</li>
+                                    <li>📊 Game theory, collusion, price wars, and more!</li>
+                                </ul>
+                                Try asking: <em>"What is oligopoly?"</em> or <em>"Explain game theory"</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input-area">
+                    <div class="quick-questions">
+                        <button class="quick-btn" onclick="askQuestion('What is oligopoly?')">What is oligopoly?</button>
+                        <button class="quick-btn" onclick="askQuestion('Explain game theory')">Game Theory</button>
+                        <button class="quick-btn" onclick="askQuestion('What is the kinked demand curve?')">Kinked Demand</button>
+                        <button class="quick-btn" onclick="askQuestion('Explain collusion')">Collusion</button>
+                    </div>
+                    <div class="input-row">
+                        <input type="text" id="chat-input" placeholder="Type your question here..." />
+                        <button id="send-btn" class="send-btn" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Videos Section -->
+        <section id="videos" class="section">
+            <div class="videos-header">
+                <h2><i class="fas fa-video"></i> Video Lessons & Q&A</h2>
+                <p>Watch the videos and ask AI questions about their content!</p>
+            </div>
+            
+            <div class="videos-grid">
+                <!-- Video 1 -->
+                <div class="video-card">
+                    <div class="video-embed">
+                        <iframe src="https://www.youtube.com/embed/Ec19ljjvlCI" 
+                                title="Oligopoly - A Level Economics"
+                                frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3>Oligopoly - A Level Economics</h3>
+                        <p>Comprehensive overview of oligopoly market structure and characteristics.</p>
+                        <div class="transcript-badge" id="ts-1">
+                            <i class="fas fa-check-circle"></i> Transcript loaded
+                        </div>
+                    </div>
+                    <div class="video-qa">
+                        <h4><i class="fas fa-question-circle"></i> Ask about this video</h4>
+                        <div class="video-input-row">
+                            <input type="text" id="video-input-Ec19ljjvlCI" placeholder="Ask a question..." />
+                            <button onclick="askVideoQuestion('Ec19ljjvlCI')">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="video-answer" id="video-answer-Ec19ljjvlCI"></div>
+                    </div>
+                </div>
+                
+                <!-- Video 2 -->
+                <div class="video-card">
+                    <div class="video-embed">
+                        <iframe src="https://www.youtube.com/embed/Z_S0VA4jKes" 
+                                title="Game Theory and Oligopoly"
+                                frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3>Game Theory and Oligopoly</h3>
+                        <p>Explains game theory concepts including the Prisoner's Dilemma.</p>
+                        <div class="transcript-badge" id="ts-2">
+                            <i class="fas fa-check-circle"></i> Transcript loaded
+                        </div>
+                    </div>
+                    <div class="video-qa">
+                        <h4><i class="fas fa-question-circle"></i> Ask about this video</h4>
+                        <div class="video-input-row">
+                            <input type="text" id="video-input-Z_S0VA4jKes" placeholder="Ask a question..." />
+                            <button onclick="askVideoQuestion('Z_S0VA4jKes')">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="video-answer" id="video-answer-Z_S0VA4jKes"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="key-concepts">
+                <h3><i class="fas fa-lightbulb"></i> Key Concepts from Videos</h3>
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <i class="fas fa-building"></i>
+                        <h4>Market Structure</h4>
+                        <p>Few dominant firms, high barriers to entry</p>
+                    </div>
+                    <div class="concept-card">
+                        <i class="fas fa-chess"></i>
+                        <h4>Game Theory</h4>
+                        <p>Strategic decision-making, Nash Equilibrium</p>
+                    </div>
+                    <div class="concept-card">
+                        <i class="fas fa-handshake"></i>
+                        <h4>Collusion</h4>
+                        <p>Cartels, tacit collusion, price leadership</p>
+                    </div>
+                    <div class="concept-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Kinked Demand</h4>
+                        <p>Price rigidity explanation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz" class="section">
+            <div class="quiz-wrapper">
+                <div class="quiz-header">
+                    <h2><i class="fas fa-question-circle"></i> Knowledge Quiz</h2>
+                    <p>Test your understanding of oligopoly concepts!</p>
+                </div>
+                
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="quiz-progress"></div>
+                    </div>
+                    <span id="progress-text">Question 1 of 10</span>
+                </div>
+                
+                <div class="quiz-content" id="quiz-content">
+                    <div class="quiz-loading">Loading questions...</div>
+                </div>
+                
+                <div class="quiz-nav">
+                    <button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()" disabled>
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <div class="quiz-results" id="quiz-results">
+                    <div class="results-card">
+                        <div class="results-icon">🏆</div>
+                        <h3>Quiz Complete!</h3>
+                        <div class="score-display">
+                            <span class="score-num" id="score-num">0</span>
+                            <span class="score-total">/ 10</span>
+                        </div>
+                        <p id="score-message"></p>
+                        <button class="btn btn-primary" onclick="restartQuiz()">
+                            <i class="fas fa-redo"></i> Try Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Flashcards Section -->
+        <section id="flashcards" class="section">
+            <div class="flashcards-wrapper">
+                <h2><i class="fas fa-clone"></i> Flashcards</h2>
+                <p>Click cards to flip and reveal definitions</p>
+                
+                <div class="flashcard-controls">
+                    <button class="btn btn-secondary" onclick="shuffleCards()">
+                        <i class="fas fa-random"></i> Shuffle
+                    </button>
+                    <span id="card-counter">Card 1 of 25</span>
+                </div>
+                
+                <div class="flashcard-viewer">
+                    <button class="fc-nav" onclick="prevCard()">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="flashcard" id="flashcard" onclick="flipCard()">
+                        <div class="flashcard-inner" id="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span class="card-label">TERM</span>
+                                <p id="card-term">Loading...</p>
+                            </div>
+                            <div class="flashcard-back">
+                                <span class="card-label">DEFINITION</span>
+                                <p id="card-definition">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="fc-nav" onclick="nextCard()">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="flashcard-grid" id="flashcard-grid"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Topic Modal -->
+    <div class="modal" id="topic-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Topic</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="askAboutTopic()">
+                    <i class="fas fa-comments"></i> Ask AI About This
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
